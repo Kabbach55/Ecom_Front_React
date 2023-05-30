@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./components/Home";
+import Products from "./components/Products";
+import "bootstrap/dist/css/bootstrap.min.css";
+import NewProduct from "./components/NewProduct";
+import EditProduct from "./components/EditProduct";
+import { AppContext, UseAppContext } from "./app/App";
+import Navbar from "./components/Navbar";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider value={UseAppContext()}>
+      <BrowserRouter>
+        <Navbar></Navbar>
+
+        <Routes>
+          <Route exact path="/" element={<Home />}></Route>
+          <Route path="/product" element={<Products />}></Route>
+          <Route path="/newproduct" element={<NewProduct />}></Route>
+          <Route path="/editproduct/:id" element={<EditProduct />}></Route>
+          <Route path="/*" element={<PageNotFound />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </AppContext.Provider>
   );
 }
 
